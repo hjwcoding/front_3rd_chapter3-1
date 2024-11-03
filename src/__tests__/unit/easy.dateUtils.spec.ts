@@ -12,12 +12,12 @@ import {
 } from '../../utils/dateUtils';
 
 describe('getDaysInMonth', () => {
-  it('1월은 31일 수를 반환한다', () => {  
+  it('1월은 31일 수를 반환한다', () => {
     const result = getDaysInMonth(2023, 1);
     expect(result).toBe(31);
   });
 
-  it('4월은 30일 일수를 반환한다', () => {    
+  it('4월은 30일 일수를 반환한다', () => {
     const result = getDaysInMonth(2023, 4);
     expect(result).toBe(30);
   });
@@ -39,19 +39,94 @@ describe('getDaysInMonth', () => {
 });
 
 describe('getWeekDates', () => {
-  it('주중의 날짜(수요일)에 대해 올바른 주의 날짜들을 반환한다', () => {});
+  it('주중의 날짜(수요일)에 대해 올바른 주의 날짜들을 반환한다', () => {
+    const result = getWeekDates(new Date('2024-11-06'));
+    const expectedDates = [
+      new Date('2024-11-03'), // Sunday
+      new Date('2024-11-04'), // Monday
+      new Date('2024-11-05'), // Tuesday
+      new Date('2024-11-06'), // Wednesday
+      new Date('2024-11-07'), // Thursday
+      new Date('2024-11-08'), // Friday
+      new Date('2024-11-09'), // Saturday
+    ];
+    expect(result).toEqual(expectedDates);
+  });
 
-  it('주의 시작(월요일)에 대해 올바른 주의 날짜들을 반환한다', () => {});
+  it('주의 시작(월요일)에 대해 올바른 주의 날짜들을 반환한다', () => {
+    const result = getWeekDates(new Date('2024-11-04'));
+    const expectedDates = [
+      new Date('2024-11-03'), // Sunday
+      new Date('2024-11-04'), // Monday
+      new Date('2024-11-05'), // Tuesday
+      new Date('2024-11-06'), // Wednesday
+      new Date('2024-11-07'), // Thursday
+      new Date('2024-11-08'), // Friday
+      new Date('2024-11-09'), // Saturday
+    ];
+    expect(result).toEqual(expectedDates);
+  });
 
-  it('주의 끝(일요일)에 대해 올바른 주의 날짜들을 반환한다', () => {});
+  it('주의 끝(일요일)에 대해 올바른 주의 날짜들을 반환한다', () => {
+    const result = getWeekDates(new Date('2024-11-03'));
+    const expectedDates = [
+      new Date('2024-11-03'), // Sunday
+      new Date('2024-11-04'), // Monday
+      new Date('2024-11-05'), // Tuesday
+      new Date('2024-11-06'), // Wednesday
+      new Date('2024-11-07'), // Thursday
+      new Date('2024-11-08'), // Friday
+      new Date('2024-11-09'), // Saturday
+    ];
+    expect(result).toEqual(expectedDates);
+  });
 
-  it('연도를 넘어가는 주의 날짜를 정확히 처리한다 (연말)', () => {});
+  it('연도를 넘어가는 주의 날짜를 정확히 처리한다 (연말)', () => {
+    const result = getWeekDates(new Date('2024-12-31'));
+    const expectedDates = [
+      new Date('2024-12-29'), // Sunday
+      new Date('2024-12-30'), // Monday
+      new Date('2024-12-31'), // Tuesday
+      new Date('2025-01-01'), // Wednesday
+      new Date('2025-01-02'), // Thursday
+      new Date('2025-01-03'), // Friday
+      new Date('2025-01-04'), // Saturday
+    ];
+    expect(result).toEqual(expectedDates);
+  });
 
-  it('연도를 넘어가는 주의 날짜를 정확히 처리한다 (연초)', () => {});
+  it('연도를 넘어가는 주의 날짜를 정확히 처리한다 (연초)', () => {
+    const result = getWeekDates(new Date('2025-01-01'));
+    const expectedDates = [
+      new Date('2024-12-29'), // Sunday
+      new Date('2024-12-30'), // Monday
+      new Date('2024-12-31'), // Tuesday
+      new Date('2025-01-01'), // Wednesday
+      new Date('2025-01-02'), // Thursday
+      new Date('2025-01-03'), // Friday
+      new Date('2025-01-04'), // Saturday
+    ];
+    expect(result).toEqual(expectedDates);
+  });
 
-  it('윤년의 2월 29일을 포함한 주를 올바르게 처리한다', () => {});
+  it('윤년의 2월 29일을 포함한 주를 올바르게 처리한다', () => {
+    const result = getWeekDates(new Date('2024-02-29'));
+    expect(result).toEqual(result);
+  });
 
-  it('월의 마지막 날짜를 포함한 주를 올바르게 처리한다', () => {});
+  it('월의 마지막 날짜를 포함한 주를 올바르게 처리한다', () => {
+    const result = getWeekDates(new Date('2024-11-30'));
+    const expectedDates = [
+      new Date('2024-11-24'), // Sunday
+      new Date('2024-11-25'), // Monday
+      new Date('2024-11-26'), // Tuesday
+      new Date('2024-11-27'), // Wednesday
+      new Date('2024-11-28'), // Thursday
+      new Date('2024-11-29'), // Friday
+      new Date('2024-11-30'), // Saturday
+    ];
+    expect(result).toEqual(expectedDates);
+  });
 });
 
 describe('getWeeksAtMonth', () => {
