@@ -3,8 +3,12 @@ import { Event } from '../types.ts';
 /**
  * 주어진 년도와 월의 일수를 반환합니다.
  */
-export function getDaysInMonth(year: number, month: number): number {
-  return new Date(year, month, 0).getDate();
+export function getDaysInMonth(year: number, month: number) {
+  if (month >= 1 && month <= 12) {
+    return new Date(year, month, 0).getDate();
+  } else {
+    return '입력한 달을 확인해 주세요.';
+  }
 }
 
 /**
